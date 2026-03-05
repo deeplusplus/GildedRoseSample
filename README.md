@@ -1,24 +1,65 @@
-# Gilded Rose starting position in C# NUnit
+# Gilded Rose Refactoring Sample (C# / NUnit)
 
-## Build the project
+This repository contains my refactoring exercise based on the well-known
+Gilded Rose kata originally created by Terry Hughes and popularized by
+Emily Bache.
 
-Use your normal build tools to build the projects in Debug mode.
-For example, you can use the `dotnet` command line tool:
+The goal of the kata is to safely improve a legacy codebase whose behavior
+is defined by a growing set of item rules. The original implementation
+relies heavily on conditional logic and is intentionally difficult to
+extend.
 
-``` cmd
-dotnet build GildedRose.sln -c Debug
-```
+My approach focuses on making the behavior easier to reason about and test
+while preserving the existing behavior of the system.
 
-## Run the Gilded Rose Command-Line program
+---
 
-For e.g. 10 days:
+## Where to Start
 
-``` cmd
-GildedRose/bin/Debug/net8.0/GildedRose 10
-```
+If reviewing the code, I recommend looking at the files in this order:
 
-## Run all the unit tests
+1. **ApprovalTest.cs**
 
-``` cmd
+   An approval test that captures the console output for 30 days of system
+   behavior. This provides a safety net while refactoring the legacy logic.
+
+2. **GildedRose.cs**
+
+   The original legacy implementation that updates item quality.
+
+3. **StandardMagicBox.cs / LegendaryMagicBox.cs**
+
+   Examples of smaller components that encapsulate item-specific behavior.
+
+4. **StandardItemMagicBoxTests.cs**
+
+   Focused unit tests that document the rules for individual item types.
+
+---
+
+## Build
+
+dotnet build GildedRose.sln
+
+---
+
+## Run the Program
+
+Run the simulation for 10 days:
+
+dotnet run --project GildedRose -- 10
+
+---
+
+## Run Tests
+
 dotnet test
-```
+
+---
+
+## Notes
+
+The approval test included in this repository originates from the Emily
+Bache version of the kata and serves as a characterization test for the
+existing behavior of the system. It allows refactoring work to proceed
+with confidence that externally visible behavior has not changed.
